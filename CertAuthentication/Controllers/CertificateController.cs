@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CertAuthentication.Utility;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
@@ -10,7 +11,6 @@ namespace CertAuthentication.Controllers
     [ApiController]
     public class CertificateController : ControllerBase
     {
-
         [HttpPost("generate")]
         public IActionResult GenerateCertificate([FromQuery] string merchantId)
         {
@@ -43,7 +43,8 @@ namespace CertAuthentication.Controllers
             // Export public certificate only (as .cer)
             byte[] certPublic = cert.Export(X509ContentType.Cert);
 
-            var outputDir = Path.Combine("Certificates", merchantId);
+            var outputDir = DirectoryUtility.GetMerchantCertDirectory(merchantId);
+            Directory.CreateDirectory(outputDir);
             System.IO.File.WriteAllBytes(Path.Combine(outputDir, $"{merchantId}_myCert.pfx"), certPfx);
             System.IO.File.WriteAllBytes(Path.Combine(outputDir, $"{merchantId}_myCert.cer"), certPublic);
 
