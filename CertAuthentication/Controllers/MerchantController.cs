@@ -11,7 +11,7 @@ namespace CertAuthentication.Controllers
     [ApiController]
     public class MerchantController : ControllerBase
     {
-        [HttpPost("sign")]
+        [HttpPost("sign-payload")]
         public IActionResult SignPayload([FromBody] SignPayloadRequst signPayloadRequst)
         {
             var outputDir = DirectoryUtility.GetMerchantCertDirectory(signPayloadRequst.MerchantId);
