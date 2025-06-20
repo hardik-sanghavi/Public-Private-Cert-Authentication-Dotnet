@@ -1,0 +1,6 @@
+@CertAuthentication_HostAddress = http://localhost:5020
+
+GET {{CertAuthentication_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
